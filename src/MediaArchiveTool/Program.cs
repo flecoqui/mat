@@ -15,15 +15,15 @@ public class Program
             Console.WriteLine(opt.GetInformationMessage());
             return;
         }
-        if((OutputStream =  MediaArchiveTool.Helpers.Helper.CheckFileAndCreate(opt.OutputFile)) == null)
+        if((!string.IsNullOrEmpty(opt.OutputFile)) && (OutputStream =  MediaArchiveTool.Helpers.Helper.CheckFileAndCreate(opt.OutputFile)) == null)
         {
             Console.WriteLine($"{opt.GetErrorMessagePrefix()} output file: {opt.OutputFile} can't be created");
             Console.WriteLine(opt.GetInformationMessage());
             return;
         }
         await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, OutputStream,$"Start Browsing folder {opt.SourceFolder} ...");
-
-        await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, OutputStream,"Browsing done");
+        var (fileCounter, sizeCounter) = await MediaArchiveTool.Helpers.Helper.BrowseFiles(opt.Verbose, OutputStream,opt.SourceFolder, opt);
+        await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, OutputStream,$"Browsing done: {fileCounter} Files {sizeCounter} Bytes");
 
     }
     public static async Task Archive(Options opt)
@@ -42,7 +42,7 @@ public class Program
             Console.WriteLine(opt.GetInformationMessage());
             return;
         }
-        if((OutputStream =  MediaArchiveTool.Helpers.Helper.CheckFileAndCreate(opt.OutputFile)) == null)
+        if((!string.IsNullOrEmpty(opt.OutputFile)) && (OutputStream =  MediaArchiveTool.Helpers.Helper.CheckFileAndCreate(opt.OutputFile)) == null)
         {
             Console.WriteLine($"{opt.GetErrorMessagePrefix()} output file: {opt.OutputFile} can't be created");
             Console.WriteLine(opt.GetInformationMessage());

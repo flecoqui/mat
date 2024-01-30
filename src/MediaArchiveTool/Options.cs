@@ -29,8 +29,14 @@ namespace MediaArchiveTool
         public string DestinationFolder { get; set; } = string.Empty;
         public string OutputFile { get; set; } = string.Empty;
         public bool Audio { get; set; } = false;
+        public string AudioExtensions { get; set; } = "aac;mp3;wma;flac;m4a";
+        public string[] AudioExtensionsArray { get; set; } = new string[0];
         public bool Video { get; set; } = false;
+        public string VideoExtensions { get; set; } = "mp4;wmv;mov";
+        public string[] VideoExtensionsArray { get; set; }  = new string[0];
         public bool Picture { get; set; } = false;
+        public string PictureExtensions { get; set; } = "heic;jpg;png;raw";
+        public string[] PictureExtensionsArray { get; set; }  = new string[0];
         public bool Verbose { get; set; } = false;
 
         public string GetErrorMessagePrefix()
@@ -127,8 +133,25 @@ namespace MediaArchiveTool
             return CheckOptions(options);
 
         }
+        public static string[] GetExtensionsArrays(string extensions)
+        {
+            string[] result = new string[0];
+            if(!string.IsNullOrEmpty(extensions))
+            {
+                result = extensions.Split(';');
+                for(int i = 0 ; i < result.Length; i++)
+                {
+                    if(!result[i].StartsWith("."))
+                        result[i] = "."+result[i];
+                }
+            }
+            return result;
+        }
         public static Options CheckOptions(Options options)
         {
+            options.AudioExtensionsArray = GetExtensionsArrays(options.AudioExtensions);
+            options.VideoExtensionsArray = GetExtensionsArrays(options.VideoExtensions);
+            options.PictureExtensionsArray = GetExtensionsArrays(options.PictureExtensions);
             if (options.ArchiveAction == Action.Help)
             {
                 return options;
