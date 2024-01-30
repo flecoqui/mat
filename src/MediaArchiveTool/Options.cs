@@ -31,6 +31,7 @@ namespace MediaArchiveTool
         public bool Audio { get; set; } = false;
         public bool Video { get; set; } = false;
         public bool Picture { get; set; } = false;
+        public bool Verbose { get; set; } = false;
 
         public string GetErrorMessagePrefix()
         {
@@ -81,6 +82,9 @@ namespace MediaArchiveTool
                             case "--picture":
                                 options.Picture = true;
                                 break;
+                            case "--verbose":
+                                options.Verbose = true;
+                                break;                                
                             case "--source":
                                 if ((i < args.Length) && (!string.IsNullOrEmpty(args[i])))
                                     options.SourceFolder = args[i++];
