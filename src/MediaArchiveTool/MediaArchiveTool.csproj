@@ -10,4 +10,8 @@
     <TrimMode>CopyUsed</TrimMode>
     <AssemblyName>mat</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MetadataExtractor" Version="2.8.1" />
+  </ItemGroup>
 </Project>

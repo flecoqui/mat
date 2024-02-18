@@ -10,7 +10,7 @@ namespace MediaArchiveTool
     {
         private string ErrorMessagePrefix = "MediaArchiveTool Error: \r\n";
         private string InformationMessage = "MediaArchiveTool:\r\n" + "Version: 1.0.0 \r\n" + "Syntax:\r\n" +
-            "mat --archive [--audio] [--picture] [--video] --source [source-folder]  --destination [destination-folder] [--verbose] \r\n" +
+            "mat --archive [--audio] [--picture] [--video] --source [source-folder]  --destination [destination-folder] [--year|--month|--day] [--verbose] \r\n" +
             "mat --list  [--audio] [--picture] [--video] --source [source-folder]  --destination [destination-folder] [--verbose] \r\n" +
             "mat --help";
 
@@ -23,7 +23,13 @@ namespace MediaArchiveTool
             List,
             Archive,
         }
+        public enum Split
+        {
+            Day = 0,
+            Month,
+            Year        }
         public Action ArchiveAction = Action.Help;
+        public Split ArchiveSplit = Split.Day;
         public string SourceFolder { get; set; } = string.Empty;
 
         public string DestinationFolder { get; set; } = string.Empty;
@@ -77,7 +83,7 @@ namespace MediaArchiveTool
                                 options.ArchiveAction = Action.List;
                                 break;
                             case "--archive":
-                                options.ArchiveAction = Action.List;
+                                options.ArchiveAction = Action.Archive;
                                 break;
                             case "--audio":
                                 options.Audio = true;
@@ -87,6 +93,15 @@ namespace MediaArchiveTool
                                 break;
                             case "--picture":
                                 options.Picture = true;
+                                break;
+                            case "--day":
+                                options.ArchiveSplit = Split.Day;
+                                break;
+                            case "--month":
+                                options.ArchiveSplit = Split.Month;
+                                break;
+                            case "--year":
+                                options.ArchiveSplit = Split.Year;
                                 break;
                             case "--verbose":
                                 options.Verbose = true;
