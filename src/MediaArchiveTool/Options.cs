@@ -38,7 +38,7 @@ namespace MediaArchiveTool
         public string AudioExtensions { get; set; } = "aac;mp3;wma;flac;m4a";
         public string[] AudioExtensionsArray { get; set; } = new string[0];
         public bool Video { get; set; } = false;
-        public string VideoExtensions { get; set; } = "mp4;wmv;mov";
+        public string VideoExtensions { get; set; } = "mpg;mpeg;mp4;wmv;mov";
         public string[] VideoExtensionsArray { get; set; }  = new string[0];
         public bool Picture { get; set; } = false;
         public string PictureExtensions { get; set; } = "heic;jpg;png;raw";
