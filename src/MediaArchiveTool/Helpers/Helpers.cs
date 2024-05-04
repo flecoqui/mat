@@ -241,7 +241,7 @@ namespace MediaArchiveTool.Helpers
             string extension = Path.GetExtension(dest);
             string filename = Path.GetFileNameWithoutExtension(dest);
 
-            return $"{directory}{Path.PathSeparator}{filename}-{index}.{extension}";
+            return $"{directory}{Path.DirectorySeparatorChar}{filename}-{index}.{extension}";
         }
         public static async Task CopyFile(bool verbose, FileStream? stream, string source, string destination)
         {

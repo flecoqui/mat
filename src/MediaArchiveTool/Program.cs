@@ -49,7 +49,7 @@ public class Program
         }
         await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, OutputStream,$"Start Archiving from folder {opt.SourceFolder} to {opt.DestinationFolder} ...");
         var (fileCounter, sizeCounter) = await MediaArchiveTool.Helpers.Helper.BrowseOrCopyFiles(true,opt.Verbose, OutputStream,opt.SourceFolder, opt);
-        await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, OutputStream,"Archiving done");
+        await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, OutputStream,$"Archiving done: {fileCounter} Files {sizeCounter} Bytes");
     }
     static async Task Main(string[] args)
     {
