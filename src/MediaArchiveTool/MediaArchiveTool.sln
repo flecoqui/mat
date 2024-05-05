@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaArchiveTool", "MediaArchiveTool.csproj", "{631DD789-5D70-4090-A368-F0A0FA4F6800}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{631DD789-5D70-4090-A368-F0A0FA4F6800}.Debug|x64.ActiveCfg = Debug|x64
+		{631DD789-5D70-4090-A368-F0A0FA4F6800}.Debug|x64.Build.0 = Debug|x64
+		{631DD789-5D70-4090-A368-F0A0FA4F6800}.Release|x64.ActiveCfg = Release|x64
+		{631DD789-5D70-4090-A368-F0A0FA4F6800}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A433ABA0-E569-42DF-8041-64985D28F9C7}
+	EndGlobalSection
+EndGlobal

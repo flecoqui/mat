@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using System.IO;
 using MediaArchiveTool;
 using MediaArchiveTool.Helpers.ExifLib;
+using MetadataExtractor;
+using System.Reflection.PortableExecutable;
+using System.Globalization;
 namespace MediaArchiveTool.Helpers
 {
     public static class Helper
@@ -243,6 +246,50 @@ namespace MediaArchiveTool.Helpers
 
             return $"{directory}{Path.DirectorySeparatorChar}{filename}-{index}.{extension}";
         }
+        public static DateTime GetVideoCreationDate(FileInfo fi)
+        {
+            var directories = ImageMetadataReader.ReadMetadata(fi.FullName);
+            DateTime CreationDateTime = fi.CreationTime > fi.LastWriteTime ? fi.LastWriteTime : fi.CreationTime;
+
+            // Loop through the directories
+            foreach (MetadataExtractor.Directory directory in directories)
+            {
+                // Print the name of the directory
+                //Console.WriteLine(directory.Name);
+
+                if (directory.Name == "QuickTime Movie Header")
+                {
+                    foreach (var tag in directory.Tags)
+                    {
+                        if (tag.Name == "Created")
+                        {
+                            // Print the name and value of the tag
+                            // Console.WriteLine("{0} = {1}", tag.Name, tag.Description);
+                            try
+                            {
+                                if (!string.IsNullOrEmpty(tag.Description))
+                                {
+                                    //"Thu Aug 10 11:59:28 2023"
+                                    CreationDateTime = DateTime.ParseExact(tag.Description, "ddd MMM dd HH:mm:ss yyyy", CultureInfo.InvariantCulture);
+                                    //Console.WriteLine(CreationDateTime);
+                                }
+                            }
+                            catch
+                            {
+                                // handle incorrect string error
+                            }
+
+                        }
+                    }
+
+                }
+                // Print a blank line
+                // Console.WriteLine();
+            }
+
+            return CreationDateTime;
+
+        }
         public static async Task CopyFile(bool verbose, FileStream? stream, string source, string destination)
         {
             await MediaArchiveTool.Helpers.Helper.Log(verbose, stream, $"Copying file {source} to {destination}");
@@ -250,9 +297,9 @@ namespace MediaArchiveTool.Helpers
             if (!string.IsNullOrEmpty(directory)) {
                 try
                 {
-                    if (!Directory.Exists(directory))
+                    if (!System.IO.Directory.Exists(directory))
                     {
-                        Directory.CreateDirectory(directory);
+                        System.IO.Directory.CreateDirectory(directory);
                     }
                     bool destinationFileExists = true;
                     int index = 1;
@@ -358,7 +405,7 @@ namespace MediaArchiveTool.Helpers
                 if(list != null)
                     foreach( FileInfo fi  in list)
                     {
-                        DateTime CreationDateTime = fi.CreationTime > fi.LastWriteTime ? fi.LastWriteTime : fi.CreationTime;
+                        DateTime CreationDateTime = GetVideoCreationDate(fi);
                         await MediaArchiveTool.Helpers.Helper.Log(opt.Verbose, stream,$"{prefix}File: {fi.Name} - {fi.Length} Bytes - Date {CreationDateTime}");
 
                         string destination = GetDestinationFolder(opt.DestinationFolder, CreationDateTime, opt.ArchiveSplit);

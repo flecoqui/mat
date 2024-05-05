@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MediaArchiveTool": {
+      "commandName": "Project",
+      "commandLineArgs": "--list --video --source C:\\Users\\flecoqui\\Videos\\2024_03 --destination C:\\Users\\flecoqui\\Videos\\fred --year --month --verbose"
+    }
+  }
+}
