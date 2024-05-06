@@ -248,43 +248,33 @@ namespace MediaArchiveTool.Helpers
         }
         public static DateTime GetVideoCreationDate(FileInfo fi)
         {
-            var directories = ImageMetadataReader.ReadMetadata(fi.FullName);
             DateTime CreationDateTime = fi.CreationTime > fi.LastWriteTime ? fi.LastWriteTime : fi.CreationTime;
-
-            // Loop through the directories
-            foreach (MetadataExtractor.Directory directory in directories)
+            try
             {
-                // Print the name of the directory
-                //Console.WriteLine(directory.Name);
+                var directories = ImageMetadataReader.ReadMetadata(fi.FullName);
 
-                if (directory.Name == "QuickTime Movie Header")
+                // Loop through the directories
+                foreach (MetadataExtractor.Directory directory in directories)
                 {
-                    foreach (var tag in directory.Tags)
+                    if (directory.Name == "QuickTime Movie Header")
                     {
-                        if (tag.Name == "Created")
+                        foreach (var tag in directory.Tags)
                         {
-                            // Print the name and value of the tag
-                            // Console.WriteLine("{0} = {1}", tag.Name, tag.Description);
-                            try
+                            if (tag.Name == "Created")
                             {
                                 if (!string.IsNullOrEmpty(tag.Description))
                                 {
-                                    //"Thu Aug 10 11:59:28 2023"
                                     CreationDateTime = DateTime.ParseExact(tag.Description, "ddd MMM dd HH:mm:ss yyyy", CultureInfo.InvariantCulture);
-                                    //Console.WriteLine(CreationDateTime);
                                 }
                             }
-                            catch
-                            {
-                                // handle incorrect string error
-                            }
-
                         }
-                    }
 
+                    }
                 }
-                // Print a blank line
-                // Console.WriteLine();
+            }
+            catch
+            {
+                // handle incorrect string error
             }
 
             return CreationDateTime;
