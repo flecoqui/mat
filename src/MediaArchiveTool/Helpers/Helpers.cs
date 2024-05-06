@@ -252,7 +252,16 @@ namespace MediaArchiveTool.Helpers
             try
             {
                 var directories = ImageMetadataReader.ReadMetadata(fi.FullName);
-
+                // foreach (MetadataExtractor.Directory directory in directories)
+                // {
+                //         foreach (var tag in directory.Tags)
+                //         {
+                //                 if (!string.IsNullOrEmpty(tag.Description))
+                //                 {
+                //                     Console.WriteLine($"{directory.Name}: {tag.Name} = {tag.Description}");
+                //                 }
+                //         }
+                // }
                 // Loop through the directories
                 foreach (MetadataExtractor.Directory directory in directories)
                 {
@@ -264,7 +273,7 @@ namespace MediaArchiveTool.Helpers
                             {
                                 if (!string.IsNullOrEmpty(tag.Description))
                                 {
-                                    CreationDateTime = DateTime.ParseExact(tag.Description, "ddd MMM dd HH:mm:ss yyyy", CultureInfo.InvariantCulture);
+                                    CreationDateTime = DateTime.ParseExact(tag.Description, "ddd MMM dd HH:mm:ss yyyy", CultureInfo.CurrentCulture);
                                 }
                             }
                         }
