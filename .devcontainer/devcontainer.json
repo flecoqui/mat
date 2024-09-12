@@ -33,5 +33,6 @@
 		  "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",    
 		  "source=content-volume,target=/content,type=volume"
 	  ],  
-	"postAttachCommand": "mkdir -p /home/$(id -un)/.ssh && touch /home/$(id -un)/.ssh/config && sudo chown -R vscode:vscode /var/run/docker.sock && sudo chown -R vscode:vscode /content"
+	"postAttachCommand": "mkdir -p /home/$(id -un)/.ssh && touch /home/$(id -un)/.ssh/config && sudo chown -R vscode:vscode /var/run/docker.sock && sudo chown -R vscode:vscode /content",
+	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
