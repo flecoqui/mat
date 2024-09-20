@@ -35,6 +35,4 @@ fi
 
 build win-x64
 build linux-x64
-build linux-musl-x64
-build rhel-x64
-build osx-x64
+
